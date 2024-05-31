@@ -99,7 +99,7 @@ namespace Weather_Discord_Bot.Bot
                 var weatherInfo = $"**Weather for {data.Location.Name}, {data.Location.Region}, {data.Location.Country}:**\n" +
                                   $"Temperature: {data.Current.Temp_C}°C\n" +
                                   $"Condition: {data.Current.Condition.Text}\n" +
-                                  $"Wind: {data.Current.Wind_Kph} kph\n" +
+                                  $"Wind: {data.Current.Wind_Kph} km/h\n" +
                                   $"Humidity: {data.Current.Humidity}%\n" +
                                   $"Cloud: {data.Current.Cloud}%";
 
