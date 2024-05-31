@@ -1,14 +1,9 @@
-﻿using System;
-using System.Net.Http;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using Discord;
+﻿using Discord;
 using Discord.WebSocket;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Weather_Discord_Bot.Weather;
+using Weather_Discord_Bot.Bot.Weather_Data;
 
-namespace Weather_Discord_Bot
+namespace Weather_Discord_Bot.Bot
 {
     class Weather_Discord_Bot
     {
@@ -52,17 +47,21 @@ namespace Weather_Discord_Bot
 
         private async Task MessageReceivedAsync(SocketMessage message)
         {
+            IUserMessage castedMessage = (IUserMessage)message;
+
             if (message.Author.Id == _client.CurrentUser.Id)
                 return;
 
-            if (message.Content.StartsWith("!help"))
+            if (message.Content.StartsWith("!weather"))
             {
-                await message.Channel.SendMessageAsync();
-            }
+                if (message.Content.Length == 8)
+                {
+                    await castedMessage.ReplyAsync($"You forgot to type the city. Use this example: !weather london");
+                    return;
+                }
 
-            if (message.Content.StartsWith("!weather "))
-            {
                 var location = message.Content.Substring(9);
+
                 var (weatherInfo, iconUrl) = await GetWeatherAsync(location);
 
                 if (weatherInfo != null)
@@ -74,11 +73,11 @@ namespace Weather_Discord_Bot
                                                 .WithColor(Color.Blue)
                                                 .Build();
 
-                    await message.Channel.SendMessageAsync(embed: embed);
+                    await castedMessage.ReplyAsync(embed: embed);
                 }
                 else
                 {
-                    await message.Channel.SendMessageAsync($"Could not get weather for {location}. Please try again.");
+                    await castedMessage.ReplyAsync($"Could not get weather for {location}. Please try again.");
                 }
             }
         }
