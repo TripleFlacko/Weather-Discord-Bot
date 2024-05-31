@@ -16,7 +16,7 @@ namespace Weather_Discord_Bot.Bot
 
         public async Task MainAsync()
         {
-            _tokens = JsonConvert.DeserializeObject<Tokens>(File.ReadAllText("../../../config.json"));
+            _tokens = JsonConvert.DeserializeObject<Tokens>(File.ReadAllText("config.json"));
 
             var config = new DiscordSocketConfig
             {
