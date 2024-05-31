@@ -1,0 +1,28 @@
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\bin\Debug\net6.0\TripleFlacko Discord Bot c#.exe
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\bin\Debug\net6.0\TripleFlacko Discord Bot c#.deps.json
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\bin\Debug\net6.0\TripleFlacko Discord Bot c#.runtimeconfig.json
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\bin\Debug\net6.0\TripleFlacko Discord Bot c#.dll
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\bin\Debug\net6.0\TripleFlacko Discord Bot c#.pdb
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\bin\Debug\net6.0\Discord.Net.Commands.dll
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\bin\Debug\net6.0\Discord.Net.Core.dll
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\bin\Debug\net6.0\Discord.Net.Interactions.dll
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\bin\Debug\net6.0\Discord.Net.Rest.dll
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\bin\Debug\net6.0\Discord.Net.Webhook.dll
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\bin\Debug\net6.0\Discord.Net.WebSocket.dll
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\bin\Debug\net6.0\System.Interactive.Async.dll
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\bin\Debug\net6.0\System.Linq.Async.dll
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\bin\Debug\net6.0\System.Reactive.dll
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\obj\Debug\net6.0\TripleFlacko Discord Bot c#.csproj.AssemblyReference.cache
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\obj\Debug\net6.0\TripleFlacko Discord Bot c#.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\obj\Debug\net6.0\TripleFlacko Discord Bot c#.AssemblyInfoInputs.cache
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\obj\Debug\net6.0\TripleFlacko Discord Bot c#.AssemblyInfo.cs
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\obj\Debug\net6.0\TripleFlacko Discord Bot c#.csproj.CoreCompileInputs.cache
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\obj\Debug\net6.0\TripleFlacko Discord Bot c#.csproj.CopyComplete
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\obj\Debug\net6.0\TripleFlacko Discord Bot c#.dll
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\obj\Debug\net6.0\refint\TripleFlacko Discord Bot c#.dll
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\obj\Debug\net6.0\TripleFlacko Discord Bot c#.pdb
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\obj\Debug\net6.0\TripleFlacko Discord Bot c#.genruntimeconfig.cache
+C:\Users\Tony\Documents\GitHub\TripleFlacko-Discord-Bot-C-\TripleFlacko Discord Bot c#\obj\Debug\net6.0\ref\TripleFlacko Discord Bot c#.dll
