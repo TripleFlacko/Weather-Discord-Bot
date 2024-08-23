@@ -10,7 +10,6 @@ namespace Weather_Discord_Bot.Bot
     {
         private DiscordSocketClient _client;
         private readonly HttpClient _httpClient = new HttpClient();
-
         private Tokens _tokens;
 
         public static Task Main(string[] args) => new Weather_Discord_Bot().MainAsync();
@@ -30,6 +29,10 @@ namespace Weather_Discord_Bot.Bot
             _client = new DiscordSocketClient(config);
 
             _client.Log += Log;
+<<<<<<< HEAD
+=======
+            _client.MessageReceived += MessageReceivedAsync;
+>>>>>>> d864591 (Added slash handler for /weather command)
             _client.Ready += ReadyAsync;
             _client.SlashCommandExecuted += SlashCommandHandler;
 
@@ -48,9 +51,59 @@ namespace Weather_Discord_Bot.Bot
         }
 
         private async Task ReadyAsync()
+<<<<<<< HEAD
+=======
+        {
+            var guild = _client.GetGuild(ulong.Parse("739057036922191932")); // Replace with your guild ID
+
+            var weatherCommand = new SlashCommandBuilder()
+                .WithName("weather")
+                .WithDescription("Gets the weather information for a specified city")
+                .AddOption("city", ApplicationCommandOptionType.String, "The name of the city", isRequired: true);
+
+            try
+            {
+                await _client.Rest.CreateGuildCommand(weatherCommand.Build(), guild.Id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        private async Task SlashCommandHandler(SocketSlashCommand command)
+        {
+            switch (command.Data.Name)
+            {
+                case "weather":
+                    var city = command.Data.Options.First().Value.ToString();
+                    var (weatherInfo, iconUrl) = await GetWeatherAsync(city);
+
+                    if (weatherInfo != null)
+                    {
+                        var embed = new EmbedBuilder()
+                            .WithTitle("Weather Information")
+                            .WithDescription(weatherInfo)
+                            .WithThumbnailUrl(iconUrl)
+                            .WithColor(Color.Blue)
+                            .Build();
+
+                        await command.RespondAsync(embed: embed);
+                    }
+                    else
+                    {
+                        await command.RespondAsync($"Could not get weather for {city}. Please try again.");
+                    }
+                    break;
+            }
+        }
+
+        private async Task MessageReceivedAsync(SocketMessage message)
+>>>>>>> d864591 (Added slash handler for /weather command)
         {
             foreach (var guild in _client.Guilds)
             {
+<<<<<<< HEAD
                 Console.WriteLine($"Bot is in Guild -> [{guild.Name}] with ID [{guild.Id}]");
 
                 var weatherCommand = new SlashCommandBuilder()
@@ -59,6 +112,9 @@ namespace Weather_Discord_Bot.Bot
                     .AddOption("city", ApplicationCommandOptionType.String, "The name of the city", isRequired: true);
 
                 try
+=======
+                if (message.Content.Length == 8 || message.Content.Length == 9)
+>>>>>>> d864591 (Added slash handler for /weather command)
                 {
                     await _client.Rest.CreateGuildCommand(weatherCommand.Build(), guild.Id);
                     Console.WriteLine($"Created /weather command in guild: {guild.Name}");
@@ -124,7 +180,8 @@ namespace Weather_Discord_Bot.Bot
                                   $"Condition: {data.Current.Condition.Text}\n" +
                                   $"Wind: {data.Current.Wind_Kph} km/h\n" +
                                   $"Humidity: {data.Current.Humidity}%\n" +
-                                  $"Cloud: {data.Current.Cloud}%";
+                                  $"Cloud: {data.Current.Cloud}%\n" +
+                                  $"Local Time: {data.Location.LocalTime}";
 
                 var fullIconUrl = $"http:{data.Current.Condition.Icon}";
 
