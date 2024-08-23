@@ -1,6 +1,5 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using Discord.Commands;
 using Newtonsoft.Json;
 using Weather_Discord_Bot.Bot.Weather_Data;
 
@@ -29,10 +28,7 @@ namespace Weather_Discord_Bot.Bot
             _client = new DiscordSocketClient(config);
 
             _client.Log += Log;
-<<<<<<< HEAD
-=======
             _client.MessageReceived += MessageReceivedAsync;
->>>>>>> d864591 (Added slash handler for /weather command)
             _client.Ready += ReadyAsync;
             _client.SlashCommandExecuted += SlashCommandHandler;
 
@@ -51,8 +47,6 @@ namespace Weather_Discord_Bot.Bot
         }
 
         private async Task ReadyAsync()
-<<<<<<< HEAD
-=======
         {
             var guild = _client.GetGuild(ulong.Parse("739057036922191932")); // Replace with your guild ID
 
@@ -99,71 +93,45 @@ namespace Weather_Discord_Bot.Bot
         }
 
         private async Task MessageReceivedAsync(SocketMessage message)
->>>>>>> d864591 (Added slash handler for /weather command)
         {
-            foreach (var guild in _client.Guilds)
+            IUserMessage castedMessage = (IUserMessage)message;
+
+            if (message.Author.Id == _client.CurrentUser.Id)
+                return;
+
+            if (message.Content.StartsWith("!weather"))
             {
-<<<<<<< HEAD
-                Console.WriteLine($"Bot is in Guild -> [{guild.Name}] with ID [{guild.Id}]");
-
-                var weatherCommand = new SlashCommandBuilder()
-                    .WithName("weather")
-                    .WithDescription("Gets the weather information for a specified city")
-                    .AddOption("city", ApplicationCommandOptionType.String, "The name of the city", isRequired: true);
-
-                try
-=======
                 if (message.Content.Length == 8 || message.Content.Length == 9)
->>>>>>> d864591 (Added slash handler for /weather command)
                 {
-                    await _client.Rest.CreateGuildCommand(weatherCommand.Build(), guild.Id);
-                    Console.WriteLine($"Created /weather command in guild: {guild.Name}");
+                    await castedMessage.ReplyAsync($"You forgot to type the city. Use this example: !weather london");
+                    return;
                 }
-                catch (Exception ex)
+
+                var location = message.Content.Substring(9);
+
+                var (weatherInfo, iconUrl) = await GetWeatherAsync(location);
+
+                if (weatherInfo != null)
                 {
-                    Console.WriteLine($"Failed to create /weather command in guild: {guild.Name}, Error: {ex}");
+                    var embed = new EmbedBuilder()
+                                                .WithTitle("Weather Information")
+                                                .WithDescription(weatherInfo)
+                                                .WithThumbnailUrl(iconUrl)
+                                                .WithColor(Color.Blue)
+                                                .Build();
+
+                    await castedMessage.ReplyAsync(embed: embed);
+                }
+                else
+                {
+                    await castedMessage.ReplyAsync($"Could not get weather for {location}. Please try again.");
                 }
             }
-        }
-
-        private async Task SlashCommandHandler(SocketSlashCommand command)
-        {
-            switch (command.Data.Name)
-            {
-                case "weather":
-                    var city = command.Data.Options.First().Value.ToString();
-                    var (weatherInfo, iconUrl) = await GetWeatherAsync(city);
-
-                    if (weatherInfo != null)
-                    {
-                        var embed = GenerateWeatherEmbed(weatherInfo, iconUrl);
-
-                        Console.WriteLine($"{DateTime.Now.ToString("HH:mm:ss")} Printed weather for {command.User.Username}");
-                        await command.RespondAsync(embed: embed);
-                    }
-                    else
-                    {
-                        Console.WriteLine($"{DateTime.Now.ToString("HH:mm:ss")} Could not get weather for {city}.");
-                        await command.RespondAsync($"Could not get weather for {city}. Please try again.");
-                    }
-                    break;
-            }
-        }
-
-        private Embed GenerateWeatherEmbed(string weatherInfo, string iconUrl)
-        {
-            return new EmbedBuilder()
-                            .WithTitle("Weather Information")
-                            .WithDescription(weatherInfo)
-                            .WithThumbnailUrl(iconUrl)
-                            .WithColor(Color.Blue)
-                            .Build();
         }
 
         private async Task<(string, string)> GetWeatherAsync(string location)
         {
             var response = await _httpClient.GetAsync($"http://api.weatherapi.com/v1/current.json?key={_tokens.WeatherApiKey}&q={location}&aqi=no");
-
             if (!response.IsSuccessStatusCode)
             {
                 return (null, null);
