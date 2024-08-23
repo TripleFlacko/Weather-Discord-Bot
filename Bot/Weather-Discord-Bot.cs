@@ -71,7 +71,7 @@ namespace Weather_Discord_Bot.Bot
             {
                 case "weather":
                     var city = command.Data.Options.First().Value.ToString();
-                    var (weatherInfo, iconUrl) = await GetWeatherAsync(city);
+                    var (weatherInfo, iconUrl, cityName) = await GetWeatherAsync(city);
 
                     if (weatherInfo != null)
                     {
@@ -83,10 +83,17 @@ namespace Weather_Discord_Bot.Bot
                             .Build();
 
                         await command.RespondAsync(embed: embed);
+                        Console.Write($"{DateTime.Now.ToString("HH:mm:ss")} Command     Printed weather for ");
+                        PrintColoredWord(cityName, ConsoleColor.Green);
+                        Console.WriteLine();
                     }
                     else
                     {
-                        await command.RespondAsync($"Could not get weather for {city}. Please try again.");
+                        await command.RespondAsync($"Could not get weather for \"{city}\". Please try again.");
+
+                        Console.Write($"{DateTime.Now.ToString("HH:mm:ss")} Error       Could not get weather for ");
+                        PrintColoredWord(city, ConsoleColor.Red);
+                        Console.WriteLine();
                     }
                     break;
             }
@@ -94,47 +101,49 @@ namespace Weather_Discord_Bot.Bot
 
         private async Task MessageReceivedAsync(SocketMessage message)
         {
-            IUserMessage castedMessage = (IUserMessage)message;
+            //IUserMessage castedMessage = (IUserMessage)message;
 
-            if (message.Author.Id == _client.CurrentUser.Id)
-                return;
+            //if (message.Author.Id == _client.CurrentUser.Id)
+            //    return;
 
-            if (message.Content.StartsWith("!weather"))
-            {
-                if (message.Content.Length == 8 || message.Content.Length == 9)
-                {
-                    await castedMessage.ReplyAsync($"You forgot to type the city. Use this example: !weather london");
-                    return;
-                }
+            //if (message.Content.StartsWith("!weather"))
+            //{
+            //    if (message.Content.Length == 8 || message.Content.Length == 9)
+            //    {
+            //        await castedMessage.ReplyAsync($"You forgot to type the city. Use this example: !weather london");
+            //        return;
+            //    }
 
-                var location = message.Content.Substring(9);
+            //    var location = message.Content.Substring(9);
 
-                var (weatherInfo, iconUrl) = await GetWeatherAsync(location);
+            //    var (weatherInfo, iconUrl, cityName) = await GetWeatherAsync(location);
 
-                if (weatherInfo != null)
-                {
-                    var embed = new EmbedBuilder()
-                                                .WithTitle("Weather Information")
-                                                .WithDescription(weatherInfo)
-                                                .WithThumbnailUrl(iconUrl)
-                                                .WithColor(Color.Blue)
-                                                .Build();
+            //    if (weatherInfo != null)
+            //    {
+            //        var embed = new EmbedBuilder()
+            //                                    .WithTitle("Weather Information")
+            //                                    .WithDescription(weatherInfo)
+            //                                    .WithThumbnailUrl(iconUrl)
+            //                                    .WithColor(Color.Blue)
+            //                                    .Build();
 
-                    await castedMessage.ReplyAsync(embed: embed);
-                }
-                else
-                {
-                    await castedMessage.ReplyAsync($"Could not get weather for {location}. Please try again.");
-                }
-            }
+            //        await castedMessage.ReplyAsync(embed: embed);
+            //        Console.WriteLine($"{DateTime.Now.ToString("HH:mm:ss")} Command     Printed weather for {cityName} using !weather command");
+            //    }
+            //    else
+            //    {
+            //        await castedMessage.ReplyAsync($"Could not get weather for {location}. Please try again.");
+            //        Console.WriteLine($"Could not get weather for {location}.");
+            //    }
+            //}
         }
 
-        private async Task<(string, string)> GetWeatherAsync(string location)
+        private async Task<(string, string, string)> GetWeatherAsync(string location)
         {
             var response = await _httpClient.GetAsync($"http://api.weatherapi.com/v1/current.json?key={_tokens.WeatherApiKey}&q={location}&aqi=no");
             if (!response.IsSuccessStatusCode)
             {
-                return (null, null);
+                return (null, null, null);
             }
 
             var json = await response.Content.ReadAsStringAsync();
@@ -153,10 +162,22 @@ namespace Weather_Discord_Bot.Bot
 
                 var fullIconUrl = $"http:{data.Current.Condition.Icon}";
 
-                return (weatherInfo, fullIconUrl);
+                return (weatherInfo, fullIconUrl, data.Location.Name);
             }
 
-            return (null, null);
+            return (null, null, null);
+        }
+
+        static void PrintColoredWord(string word, ConsoleColor color)
+        {
+            // Change the font color
+            Console.ForegroundColor = color;
+
+            // Print the word
+            Console.Write(word);
+
+            // Reset the color to the default
+            Console.ResetColor();
         }
     }
 }
