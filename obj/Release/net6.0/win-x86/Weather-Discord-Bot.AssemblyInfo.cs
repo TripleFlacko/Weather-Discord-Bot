@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Weather-Discord-Bot")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+917d03d1c7563f44d1f438df37e0d409e6ced87b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9db8d09ad85d67137ea58b7e8ffa050506bf265e")]
 [assembly: System.Reflection.AssemblyProductAttribute("Weather-Discord-Bot")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Weather-Discord-Bot")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

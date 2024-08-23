@@ -9,7 +9,6 @@ namespace Weather_Discord_Bot.Bot
     {
         private DiscordSocketClient _client;
         private readonly HttpClient _httpClient = new HttpClient();
-
         private Tokens _tokens;
 
         public static Task Main(string[] args) => new Weather_Discord_Bot().MainAsync();
@@ -30,6 +29,8 @@ namespace Weather_Discord_Bot.Bot
 
             _client.Log += Log;
             _client.MessageReceived += MessageReceivedAsync;
+            _client.Ready += ReadyAsync;
+            _client.SlashCommandExecuted += SlashCommandHandler;
 
             var token = _tokens.DiscordBotToken;
 
@@ -45,6 +46,52 @@ namespace Weather_Discord_Bot.Bot
             return Task.CompletedTask;
         }
 
+        private async Task ReadyAsync()
+        {
+            var guild = _client.GetGuild(ulong.Parse("739057036922191932")); // Replace with your guild ID
+
+            var weatherCommand = new SlashCommandBuilder()
+                .WithName("weather")
+                .WithDescription("Gets the weather information for a specified city")
+                .AddOption("city", ApplicationCommandOptionType.String, "The name of the city", isRequired: true);
+
+            try
+            {
+                await _client.Rest.CreateGuildCommand(weatherCommand.Build(), guild.Id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        private async Task SlashCommandHandler(SocketSlashCommand command)
+        {
+            switch (command.Data.Name)
+            {
+                case "weather":
+                    var city = command.Data.Options.First().Value.ToString();
+                    var (weatherInfo, iconUrl) = await GetWeatherAsync(city);
+
+                    if (weatherInfo != null)
+                    {
+                        var embed = new EmbedBuilder()
+                            .WithTitle("Weather Information")
+                            .WithDescription(weatherInfo)
+                            .WithThumbnailUrl(iconUrl)
+                            .WithColor(Color.Blue)
+                            .Build();
+
+                        await command.RespondAsync(embed: embed);
+                    }
+                    else
+                    {
+                        await command.RespondAsync($"Could not get weather for {city}. Please try again.");
+                    }
+                    break;
+            }
+        }
+
         private async Task MessageReceivedAsync(SocketMessage message)
         {
             IUserMessage castedMessage = (IUserMessage)message;
@@ -54,7 +101,7 @@ namespace Weather_Discord_Bot.Bot
 
             if (message.Content.StartsWith("!weather"))
             {
-                if (message.Content.Length == 8)
+                if (message.Content.Length == 8 || message.Content.Length == 9)
                 {
                     await castedMessage.ReplyAsync($"You forgot to type the city. Use this example: !weather london");
                     return;
@@ -101,7 +148,8 @@ namespace Weather_Discord_Bot.Bot
                                   $"Condition: {data.Current.Condition.Text}\n" +
                                   $"Wind: {data.Current.Wind_Kph} km/h\n" +
                                   $"Humidity: {data.Current.Humidity}%\n" +
-                                  $"Cloud: {data.Current.Cloud}%";
+                                  $"Cloud: {data.Current.Cloud}%\n" +
+                                  $"Local Time: {data.Location.LocalTime}";
 
                 var fullIconUrl = $"http:{data.Current.Condition.Icon}";
 
